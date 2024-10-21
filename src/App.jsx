@@ -1,5 +1,6 @@
 import 'bulma/css/bulma.css';
 import './App.scss';
+import { useState } from 'react';
 
 export const goodsFromServer = [
   'Dumplings',
@@ -14,33 +15,82 @@ export const goodsFromServer = [
   'Garlic',
 ];
 
-export const App = () => (
-  <div className="section content">
-    <div className="buttons">
-      <button type="button" className="button is-info is-light">
-        Sort alphabetically
-      </button>
+export const App = () => {
+  const [sort, setSort] = useState([...goodsFromServer]);
+  const [isActive, setIsActive] = useState('');
 
-      <button type="button" className="button is-success is-light">
-        Sort by length
-      </button>
+  const arrayIsEquall = (arr1, arr2) => {
+    return JSON.stringify(arr1) !== JSON.stringify(arr2);
+  };
 
-      <button type="button" className="button is-warning is-light">
-        Reverse
-      </button>
+  const handle = good => {
+    let newSort;
 
-      <button type="button" className="button is-danger is-light">
-        Reset
-      </button>
+    setIsActive(good);
+
+    switch (good) {
+      case 'abc':
+        newSort = [...sort].sort();
+        break;
+      case 'length':
+        newSort = [...sort].sort((a, b) => a.length - b.length);
+        break;
+      case 'reverse':
+        newSort = [...sort].reverse();
+        break;
+      default:
+        newSort = [...goodsFromServer];
+    }
+
+    setSort(newSort);
+  };
+
+  return (
+    <div className="section content">
+      <div className="buttons">
+        <button
+          type="button"
+          className={`button is-info ${isActive !== 'abc' && 'is-light'}`}
+          onClick={() => handle('abc')}
+        >
+          Sort alphabetically
+        </button>
+
+        <button
+          type="button"
+          className={`button is-success ${isActive !== 'length' && 'is-light'}`}
+          onClick={() => handle('length')}
+        >
+          Sort by length
+        </button>
+
+        <button
+          type="button"
+          className={`button is-warning ${isActive !== 'reverse' && 'is-light'}`}
+          onClick={() => handle('reverse')}
+        >
+          Reverse
+        </button>
+        {arrayIsEquall(sort, goodsFromServer) && (
+          <button
+            type="button"
+            className="button is-danger is-light"
+            onClick={() => handle('')}
+          >
+            Reset
+          </button>
+        )}
+      </div>
+
+      <ul>
+        {sort.map(good => {
+          return (
+            <li key={good} data-cy="Good">
+              {good}
+            </li>
+          );
+        })}
+      </ul>
     </div>
-
-    <ul>
-      <li data-cy="Good">Dumplings</li>
-      <li data-cy="Good">Carrot</li>
-      <li data-cy="Good">Eggs</li>
-      <li data-cy="Good">Ice cream</li>
-      <li data-cy="Good">Apple</li>
-      <li data-cy="Good">...</li>
-    </ul>
-  </div>
-);
+  );
+};
