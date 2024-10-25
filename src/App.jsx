@@ -45,13 +45,11 @@ export const App = () => {
 
         break;
       case 'reverse':
-        if (active === 'abc') {
+        if (active === 'abc' || active === 'length') {
           setReverse(!reverse);
         } else if (active === 'reverse') {
           setReverse(!reverse);
           setActive('');
-        } else if (active === 'length') {
-          setReverse(!reverse);
         } else {
           setReverse(!reverse);
           setActive('reverse');
@@ -73,7 +71,7 @@ export const App = () => {
       <div className="buttons">
         <button
           type="button"
-          className={`button is-info ${(active !== 'abc' ? 'is-light' : '') || (active !== 'abc' && reverse ? 'is-light' : '')}`}
+          className={`button is-info ${(active !== 'abc' ? 'is-light' : '') || (active !== 'abc' && reverse) ? 'is-light' : ''}`}
           onClick={() => handleSort('abc')}
         >
           Sort alphabetically
