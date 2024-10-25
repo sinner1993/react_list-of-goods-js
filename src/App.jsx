@@ -20,7 +20,7 @@ export const App = () => {
   const [reverse, setReverse] = useState(false);
   const [active, setActive] = useState('');
 
-  const handle = good => {
+  const handleSort = good => {
     let newSort;
 
     switch (good) {
@@ -73,16 +73,16 @@ export const App = () => {
       <div className="buttons">
         <button
           type="button"
-          className={`button is-info ${(active !== 'abc' && 'is-light') || (active !== 'abc' && reverse ? 'is-light' : '')}`}
-          onClick={() => handle('abc')}
+          className={`button is-info ${(active !== 'abc' ? 'is-light' : '') || (active !== 'abc' && reverse ? 'is-light' : '')}`}
+          onClick={() => handleSort('abc')}
         >
           Sort alphabetically
         </button>
 
         <button
           type="button"
-          className={`button is-success ${(active !== 'length' && 'is-light') || (active !== 'length' && reverse) ? 'is-light' : ''}`}
-          onClick={() => handle('length')}
+          className={`button is-success ${(active !== 'length' ? 'is-light' : '') || (active !== 'length' && reverse) ? 'is-light' : ''}`}
+          onClick={() => handleSort('length')}
         >
           Sort by length
         </button>
@@ -90,7 +90,7 @@ export const App = () => {
         <button
           type="button"
           className={`button is-warning ${reverse ? '' : 'is-light'}`}
-          onClick={() => handle('reverse')}
+          onClick={() => handleSort('reverse')}
         >
           Reverse
         </button>
@@ -98,7 +98,7 @@ export const App = () => {
           <button
             type="button"
             className="button is-danger is-light"
-            onClick={() => handle('')}
+            onClick={() => handleSort('')}
           >
             Reset
           </button>
